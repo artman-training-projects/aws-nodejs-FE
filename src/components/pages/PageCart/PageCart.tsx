@@ -122,10 +122,16 @@ export default function PageCart() {
         })),
         address,
       });
-      axios.put(`${API_PATHS.order}/order`, formattedValues).then(() => {
-        dispatch(clearCart());
-        setActiveStep(activeStep + 1);
-      });
+
+      axios
+        .put(`${API_PATHS.order}/order`, formattedValues)
+        .then(() => {
+          dispatch(clearCart());
+          setActiveStep(activeStep + 1);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     }
   };
 

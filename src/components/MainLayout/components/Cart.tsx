@@ -1,12 +1,12 @@
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import Badge from "@material-ui/core/Badge";
 import CartIcon from "@material-ui/icons/ShoppingCart";
 import IconButton from "@material-ui/core/IconButton";
-import React, { useEffect } from "react";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
 import { selectCartItems, updateFromApi } from "store/cartSlice";
-import { Link } from "react-router-dom";
-import API_PATHS from "../../../constants/apiPaths";
+import API_PATHS from "constants/apiPaths";
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -25,7 +25,10 @@ export default function Cart() {
         }) => {
           dispatch(updateFromApi(cart));
         }
-      );
+      )
+      .catch((e) => {
+        console.error(e);
+      });
   }, [dispatch]);
   const cartItems = useSelector(selectCartItems);
   const badgeContent = cartItems.length || undefined;

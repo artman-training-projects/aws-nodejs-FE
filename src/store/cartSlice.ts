@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
 import { RootState } from "store/store";
 import { Product } from "models/Product";
 import { CartItem } from "models/CartItem";
-import API_PATHS from "../constants/apiPaths";
-import axios from "axios";
+import API_PATHS from "constants/apiPaths";
 
 interface CartState {
   items: CartItem[];
@@ -60,15 +60,22 @@ export const addToCart =
     const {
       cart: { items },
     } = getState();
-    await axios.put(
-      `${API_PATHS.cart}/profile/cart`,
-      { items },
-      {
-        headers: {
-          Authorization: `Basic ${localStorage.getItem("authorization_token")}`,
-        },
-      }
-    );
+
+    await axios
+      .put(
+        `${API_PATHS.cart}/profile/cart`,
+        { items },
+        {
+          headers: {
+            Authorization: `Basic ${localStorage.getItem(
+              "authorization_token"
+            )}`,
+          },
+        }
+      )
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
 export const removeFromCart =
@@ -77,15 +84,22 @@ export const removeFromCart =
     const {
       cart: { items },
     } = getState();
-    await axios.put(
-      `${API_PATHS.cart}/profile/cart`,
-      { items },
-      {
-        headers: {
-          Authorization: `Basic ${localStorage.getItem("authorization_token")}`,
-        },
-      }
-    );
+
+    await axios
+      .put(
+        `${API_PATHS.cart}/profile/cart`,
+        { items },
+        {
+          headers: {
+            Authorization: `Basic ${localStorage.getItem(
+              "authorization_token"
+            )}`,
+          },
+        }
+      )
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
 export const clearCart = () => async (dispatch: any, getState: any) => {
@@ -93,15 +107,20 @@ export const clearCart = () => async (dispatch: any, getState: any) => {
   const {
     cart: { items },
   } = getState();
-  await axios.put(
-    `${API_PATHS.cart}/profile/cart`,
-    { items },
-    {
-      headers: {
-        Authorization: `Basic ${localStorage.getItem("authorization_token")}`,
-      },
-    }
-  );
+
+  await axios
+    .put(
+      `${API_PATHS.cart}/profile/cart`,
+      { items },
+      {
+        headers: {
+          Authorization: `Basic ${localStorage.getItem("authorization_token")}`,
+        },
+      }
+    )
+    .catch((e) => {
+      console.error(e);
+    });
 };
 
 export const { updateFromApi } = cartSlice.actions;

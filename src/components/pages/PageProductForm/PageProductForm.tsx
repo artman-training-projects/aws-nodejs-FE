@@ -107,9 +107,13 @@ export default function PageProductForm() {
     const productToSave = id
       ? { ...ProductSchema.cast(formattedValues), id }
       : formattedValues;
+
     axios
       .put(`${API_PATHS.bff}/product`, productToSave)
-      .then(() => history.push("/admin/products"));
+      .then(() => history.push("/admin/products"))
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   useEffect(() => {
@@ -117,10 +121,16 @@ export default function PageProductForm() {
       setIsLoading(false);
       return;
     }
-    axios.get(`${API_PATHS.bff}/product/${id}`).then((res) => {
-      setProduct(res.data);
-      setIsLoading(false);
-    });
+
+    axios
+      .get(`${API_PATHS.bff}/product/${id}`)
+      .then((res) => {
+        setProduct(res.data);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }, [id]);
 
   if (isLoading) return <p>loading...</p>;

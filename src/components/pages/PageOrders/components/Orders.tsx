@@ -15,13 +15,28 @@ export default function Orders() {
   const [orders, setOrders] = useState<any>([]);
 
   useEffect(() => {
-    axios.get(`${API_PATHS.order}/order`).then((res) => setOrders(res.data));
+    axios
+      .get(`${API_PATHS.order}/order`)
+      .then((res) => setOrders(res.data))
+      .catch((e) => {
+        console.error(e);
+      });
   }, []);
 
   const onDelete = (id: string) => {
-    axios.delete(`${API_PATHS.order}/order/${id}`).then(() => {
-      axios.get(`${API_PATHS.order}/order`).then((res) => setOrders(res.data));
-    });
+    axios
+      .delete(`${API_PATHS.order}/order/${id}`)
+      .then(() => {
+        axios
+          .get(`${API_PATHS.order}/order`)
+          .then((res) => setOrders(res.data))
+          .catch((e) => {
+            console.error(e);
+          });
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   return (
