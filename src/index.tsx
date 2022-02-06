@@ -9,26 +9,26 @@ import * as serviceWorker from "./serviceWorker";
 import "index.css";
 
 axios.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    if (error?.response?.status === 400) {
-      alert(error.response.data?.data);
-    }
+	(response) => {
+		return response;
+	},
+	(error) => {
+		if ([400, 401, 403].includes(error?.response?.status)) {
+			alert(error.response.data?.data);
+		}
 
-    return Promise.reject(error?.response ?? error);
-  }
+		return Promise.reject(error?.response ?? error);
+	}
 );
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <CssBaseline />
-      <App />
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById("root")
+	<React.StrictMode>
+		<Provider store={store}>
+			<CssBaseline />
+			<App />
+		</Provider>
+	</React.StrictMode>,
+	document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
